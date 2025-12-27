@@ -4,7 +4,7 @@ import os
 config_file = "configs/main_config.py"
 folder_scripts = "configs"
 
-# Создаём папку если её нет
+#Create a folder
 if not os.path.exists(folder_scripts):
     os.makedirs(folder_scripts, exist_ok=True)
 
@@ -15,16 +15,16 @@ if not os.path.exists(config_file):
 
 pygame.init()
 
-# микшер
+#mixer
 pygame.mixer.pre_init(44100, -16, 1, 512)
 
-# музыка
+#music
 sound_1 = pygame.mixer.music.load("sounds/1.mp3")
 pygame.mixer.music.set_volume(0.5)
 pygame.mixer.music.play()
 pygame.mixer.music.queue("sounds/3.mp3")
 
-# импорт
+#import cfg
 import configs.main_config as cfg
 
 
@@ -34,7 +34,7 @@ clock = pygame.time.Clock()
 font = pygame.font.Font("font/Pixel.ttf", 23)
 font_1 = pygame.font.Font("font/Pixel.ttf", 13)
 
-# загрузка png
+#loading png
 click_png = pygame.image.load("png/click.png").convert()
 click_me = pygame.image.load("png/Click_me.png").convert_alpha()
 
@@ -42,7 +42,7 @@ pygame.display.set_caption("Clicker")
 pygame.display.set_icon(click_png)
 
 
-# класс кнопок
+#Class of button
 class button():
     def __init__(self, x, y, image, scale):
         width = image.get_width()
@@ -53,10 +53,10 @@ class button():
     
     def draw(self):
 
-        # позиция мыши
+        # pos mouse
         pos = pygame.mouse.get_pos()
         
-        # чекер
+        # checker
         if self.rect.collidepoint(pos):
             if pygame.mouse.get_pressed()[0] == 1 and self.click == False:
                 self.click = True
@@ -71,10 +71,11 @@ class button():
         # рисуем кнопки
         screen.blit(self.image, (self.rect.x, self.rect.y))
 
-# делаем кнопки
+
+# buttons
 buttons_click = button(335, 150, click_me, 0.1)
 
-# цикл
+# dont touch
 running = True
 while running:
 
@@ -108,3 +109,4 @@ while running:
     pygame.display.update()
 
 pygame.quit()
+
