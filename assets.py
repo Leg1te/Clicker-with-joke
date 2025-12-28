@@ -4,7 +4,7 @@ import json
 from cryptography.fernet import Fernet
 
 
-# Функция для получения ключа
+# function for key
 def get_key(key_file="key.key"):
     if not os.path.exists(key_file):
         key = Fernet.generate_key()
@@ -14,7 +14,7 @@ def get_key(key_file="key.key"):
     with open(key_file, "rb") as f:
         return f.read()
 
-
+# folder for config
 def folder():
     os.makedirs("data/configs", exist_ok=True)
 
@@ -30,20 +30,20 @@ def folder():
         with open(config_path, "wb") as file_write:
             file_write.write(config)
 
-
+# loading assets
 def load_assets():
-    folder()  # Создаём файл если нужно
+    folder()
 
     key = get_key()
     fernet = Fernet(key)
 
-    # Чтение конфига
+    # reading config
     with open("data/configs/main_config.json", "rb") as file_read:
         enc_data = file_read.read()
         decoded_data = fernet.decrypt(enc_data)
         data = json.loads(decoded_data.decode("utf-8"))
 
-    # Загрузка ресурсов
+    # loading assets
     font = pygame.font.Font("data/font/Pixel.ttf", 23)
     font_1 = pygame.font.Font("data/font/Pixel.ttf", 13)
     click_png = pygame.image.load("data/png/click(1).ico").convert()
