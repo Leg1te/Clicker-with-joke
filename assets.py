@@ -18,10 +18,10 @@ def get_key(key_file="key.key"):
 def folder():
     os.makedirs("data/configs", exist_ok=True)
 
-    key = get_key()  # Используем правильный ключ
+    key = get_key()  # using keys
     fernet = Fernet(key)
 
-    # ✅ Правильно: dumps() возвращает строку
+    # dumping
     config_data = json.dumps({'score': 0}).encode("utf-8")
     config = fernet.encrypt(config_data)
 
