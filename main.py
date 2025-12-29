@@ -2,15 +2,6 @@ import pygame
 
 pygame.init()
 
-#mixer
-pygame.mixer.pre_init(44100, -16, 1, 512)
-
-#music
-sound_1 = pygame.mixer.music.load("data/sounds/1.mp3")
-pygame.mixer.music.set_volume(0.5)
-pygame.mixer.music.play()
-pygame.mixer.music.queue("data/sounds/3.mp3")
-
 screen = pygame.display.set_mode((800, 600))
 clock = pygame.time.Clock()
 
