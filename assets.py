@@ -32,6 +32,9 @@ def folder():
 
 # loading assets
 def load_assets():
+    pygame.init()
+    pygame.mixer.init(44100, -16, 1, 512)
+
     folder()
 
     key = get_key()
@@ -43,19 +46,13 @@ def load_assets():
         decoded_data = fernet.decrypt(enc_data)
         data = json.loads(decoded_data.decode("utf-8"))
 
-    pygame.init()
-    pygame.mixer.init(44100, -16, 1, 512)
-
     # loading assets
     font = pygame.font.Font("data/font/Pixel.ttf", 23)
     font_1 = pygame.font.Font("data/font/Pixel.ttf", 13)
 
-    click_ico = pygame.image.load("data/png/click(1).ico").convert()
-    click_me = pygame.image.load("data/png/Click_me.png").convert_alpha()
-
-    pygame.mixer.music.set_volume(0.5)
-    pygame.mixer.music.load("data/sounds/1.mp3")
-    click = pygame.mixer.Sound("data/sounds/Click.mp3")
+    click_ico = pygame.image.load("data/png/click(1).ico")
+    click_me = pygame.image.load("data/png/Click_me.png")
+    click_sound = pygame.mixer.Sound("data/sounds/Click.mp3")
 
     return {
         "score": data["score"],
@@ -63,7 +60,5 @@ def load_assets():
         "click_me": click_me,
         "font": font,
         "font_1": font_1,
-        "music": "data/sounds/1.mp3",
-        "click_sound": click
-
+        "click_sound": click_sound,
     }
