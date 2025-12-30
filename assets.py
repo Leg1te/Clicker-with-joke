@@ -3,9 +3,16 @@ import os
 import json
 from cryptography.fernet import Fernet
 
-
 # function for key
-def get_key(key_file="key.key"):
+def get_key(key_file=None):
+    if key_file is None:
+        appdata = os.getenv('APPDATA')
+        key_file = os.path.join(appdata, "Clicker", "key.key")
+
+    key_dir = os.path.dirname(key_file)
+    if not os.path.exists(key_dir):
+        os.makedirs(key_dir, exist_ok=True)
+
     if not os.path.exists(key_file):
         key = Fernet.generate_key()
         with open(key_file, "wb") as f:
@@ -62,3 +69,13 @@ def load_assets():
         "font_1": font_1,
         "click_sound": click_sound,
     }
+def save_score(score):
+    key = get_key()
+    fernet = Fernet(key)
+
+    config_data = json.dumps({"score": score}).encode("utf-8")
+    config = fernet.encrypt(config_data)
+
+    config_path = "data/configs/main_config.json"
+    with open (config_path, "wb") as file_write:
+        file_write.write(config)

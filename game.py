@@ -8,7 +8,6 @@ class Game:
         pygame.display.set_icon(self.assets["ico"])
 
         self.click = False
-        self.mouse_clicked = False
         self.click_sound = assets["click_sound"]
 
         self.Score = self.assets["score"] # score
@@ -37,15 +36,7 @@ class Game:
 
                 # checker
                 if self.rect.collidepoint(pos):
-                    if pygame.mouse.get_pressed()[0] == 1 and self.game.click == False:
-                        self.game.click = True
-                        self.game.mouse_clicked = True
-                        self.game.click_sound.play()
-                        self.game.Score += 1
-
-                    if pygame.mouse.get_pressed()[0] == 0:
-                        self.game.click = False
-                        self.game.mouse_clicked = False
+                    pass
 
                 # drawing
                 self.game.screen.blit(self.image, (self.rect.x, self.rect.y))
@@ -65,18 +56,29 @@ class Game:
 
             self.screen.fill((255, 255, 255))
 
-            # draw
-            self.buttons_click.draw()
-
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    from assets import save_score
+                    save_score(self.Score)
                     running = False
 
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.buttons_click.rect.collidepoint(event.pos):
+                        if not self.click:
+                            self.click = True
+                            self.click_sound.play()
+                            self.Score += 1
+
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE and self.click == False and not self.mouse_clicked:
+                    if event.key == pygame.K_SPACE and not self.click:
                         self.click = True
                         self.click_sound.play()
                         self.Score += 1
+
+                if event.type == pygame.MOUSEBUTTONUP or event.type == pygame.KEYUP:
+                    self.click = False
+
+            self.buttons_click.draw()
 
             text_surface = self.font.render(f"Очков: {self.Score}", True, (0, 0, 0))
             self.screen.blit(text_surface, (290, 30))
