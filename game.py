@@ -30,7 +30,6 @@ class Game:
                 self.game = game
 
             def draw(self):
-
                 # pos mouse
                 pos = pygame.mouse.get_pos()
 
@@ -44,6 +43,7 @@ class Game:
         # buttons
         self.buttons_click = Button(335, 150, self.assets["click_me"].convert_alpha(), 0.1, self)
         self.shop_button = Button(-30, 485 , self.assets["shop"].convert_alpha(), 0.15, self)
+        self.logo = Button(335,150, self.assets["logo"].convert_alpha(), 10, self)
 
         #fonts
         self.font = self.assets["font"]
@@ -93,6 +93,9 @@ class Game:
 
             text = self.font_1.render("Цель: 15000 очков", True, (0, 0, 0))
             self.screen.blit(text, (270, 400))
+
+            logo = self.font.render("МУЗЫКА", True, (0, 0, 0))
+            self.screen.blit(logo, (660, 550))
 
             self.clock.tick(60)
             pygame.display.update()

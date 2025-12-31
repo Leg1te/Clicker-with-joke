@@ -60,6 +60,8 @@ def load_assets():
     click_ico = pygame.image.load("data/png/click(1).ico")
     click_me = pygame.image.load("data/png/Click_me.png")
     shop = pygame.image.load("data/png/shop.jpg")
+    logo = pygame.image.load("data/png/logo.png")
+    logotwo = pygame.image.load("data/png/logo2.png")
 
     click_sound = pygame.mixer.Sound("data/sounds/Click.mp3")
 
@@ -70,7 +72,9 @@ def load_assets():
         "font": font,
         "font_1": font_1,
         "click_sound": click_sound,
-        "shop": shop
+        "shop": shop,
+        "logo": logo,
+        "logotwo": logotwo,
     }
 def save_score(score):
     # key
