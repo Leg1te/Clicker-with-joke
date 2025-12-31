@@ -43,6 +43,7 @@ class Game:
 
         # buttons
         self.buttons_click = Button(335, 150, self.assets["click_me"].convert_alpha(), 0.1, self)
+        self.shop_button = Button(-30, 485 , self.assets["shop"].convert_alpha(), 0.15, self)
 
         #fonts
         self.font = self.assets["font"]
@@ -58,30 +59,34 @@ class Game:
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    # saving
                     from assets import save_score
                     save_score(self.Score)
                     running = False
+                    continue
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    if self.buttons_click.rect.collidepoint(event.pos):
-                        if not self.click:
-                            self.click = True
-                            self.click_sound.play()
-                            self.Score += 1
-
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE and not self.click:
+                    if self.buttons_click.rect.collidepoint(event.pos) and not self.click:
                         self.click = True
                         self.click_sound.play()
                         self.Score += 1
+                        break
 
-                if event.type == pygame.MOUSEBUTTONUP or event.type == pygame.KEYUP:
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE and not self.click :
+                        self.click = True
+                        self.click_sound.play()
+                        self.Score += 1
+                        break
+
+                elif event.type in (pygame.MOUSEBUTTONUP, pygame.KEYUP):
                     self.click = False
 
             self.buttons_click.draw()
+            self.shop_button.draw()
 
             text_surface = self.font.render(f"Очков: {self.Score}", True, (0, 0, 0))
-            self.screen.blit(text_surface, (290, 30))
+            self.screen.blit(text_surface, (300, 30))
 
             text_surface_1 = self.font_1.render("P.s space - что-бы кликать", True, (0, 0, 0))
             self.screen.blit(text_surface_1, (220, 360))

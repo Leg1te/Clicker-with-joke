@@ -59,6 +59,8 @@ def load_assets():
 
     click_ico = pygame.image.load("data/png/click(1).ico")
     click_me = pygame.image.load("data/png/Click_me.png")
+    shop = pygame.image.load("data/png/shop.jpg")
+
     click_sound = pygame.mixer.Sound("data/sounds/Click.mp3")
 
     return {
@@ -68,14 +70,18 @@ def load_assets():
         "font": font,
         "font_1": font_1,
         "click_sound": click_sound,
+        "shop": shop
     }
 def save_score(score):
+    # key
     key = get_key()
     fernet = Fernet(key)
 
+    # decode
     config_data = json.dumps({"score": score}).encode("utf-8")
     config = fernet.encrypt(config_data)
 
+    #write
     config_path = "data/configs/main_config.json"
     with open (config_path, "wb") as file_write:
         file_write.write(config)
